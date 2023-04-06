@@ -15,11 +15,18 @@ async def measure_runtime() -> float:
     Aim is to measure the total runtime and return it.
     """
     # https://docs.python.org/3.8/library/functools.html#functools.partial
+    """
+    #First_trial
     func = partial(async_comprehension)
-    s = time.perf_counter()
+    start = time.perf_counter()
 
     await asyncio.gather(func(), func(), func(), func())
 
-    elapsed = time.perf_counter() - s
+    elapsed = time.perf_counter() - start
 
     return elapsed
+    """
+    start = time.time()
+    await asyncio.gather(*(async_comprehension() for _ in range(4)))
+    end = time.time() - start
+    return end
